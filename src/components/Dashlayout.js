@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import DashHeader from "./DashHeader";
 import DashFooter from "./DashFooter";
 
-const Dashlayout = () => {
+const DashLayout = () => {
   return (
     <>
       <DashHeader />
@@ -13,5 +13,4 @@ const Dashlayout = () => {
     </>
   );
 };
-
-export default Dashlayout;
+export default DashLayout;

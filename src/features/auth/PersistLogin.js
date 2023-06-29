@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import usePersist from "../../hooks/usePersist";
-import { selectCurrentToken } from "./authSlice";
+import { Outlet, Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
-import { Link, Outlet } from "react-router-dom";
+import usePersist from "../../hooks/usePersist";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "./authSlice";
 
 const PersistLogin = () => {
   const [persist] = usePersist();
@@ -36,19 +36,25 @@ const PersistLogin = () => {
 
   let content;
   if (!persist) {
+    console.log("no persist");
     content = <Outlet />;
   } else if (isLoading) {
+    console.log("loading");
     content = <p>Loading...</p>;
   } else if (isError) {
+    console.log("error");
     content = (
       <p className="errmsg">
-        {error.data?.message}
-        <Link to="/login">Please Login again</Link>
+        {`${error?.data?.message} - `}
+        <Link to="/login">Please Login again</Link>.
       </p>
     );
   } else if (isSuccess && trueSuccess) {
+    console.log("success");
     content = <Outlet />;
   } else if (token && isUninitialized) {
+    console.log("token and uninit");
+    console.log(isUninitialized);
     content = <Outlet />;
   }
 

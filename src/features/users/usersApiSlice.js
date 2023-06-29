@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 
 const usersAdapter = createEntityAdapter({});
@@ -35,7 +35,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           ...initialUserData,
         },
       }),
-      invalidatesTags: [{ types: "User", id: "LIST" }],
+      invalidatesTags: [{ type: "User", id: "LIST" }],
     }),
     updateUser: builder.mutation({
       query: (initialUserData) => ({
@@ -45,15 +45,15 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           ...initialUserData,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ types: "User", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
     }),
     deleteUser: builder.mutation({
       query: ({ id }) => ({
-        url: "/users",
+        url: `/users`,
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: (result, error, arg) => [{ types: "User", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
     }),
   }),
 });
@@ -65,19 +65,21 @@ export const {
   useDeleteUserMutation,
 } = usersApiSlice;
 
-//return the query result object
+// returns the query result object
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select();
 
-//creates memorised selector
+// creates memoized selector
 const selectUsersData = createSelector(
   selectUsersResult,
-  (usersResult) => usersResult.data
+  (usersResult) => usersResult.data // normalized state object with ids & entities
 );
 
+//getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
   selectAll: selectAllUsers,
   selectById: selectUserById,
   selectIds: selectUserIds,
+  // Pass in a selector that returns the users slice of state
 } = usersAdapter.getSelectors(
   (state) => selectUsersData(state) ?? initialState
 );

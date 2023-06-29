@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
+import { useLoginMutation } from "./authApiSlice";
 import usePersist from "../../hooks/usePersist";
 
 const Login = () => {
@@ -65,11 +65,11 @@ const Login = () => {
         <p ref={errRef} className={errClass} aria-live="assertive">
           {errMsg}
         </p>
-        <form onSubmit={handleSubmit} className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>
           <input
-            type="text"
             className="form__input"
+            type="text"
             id="username"
             ref={userRef}
             value={username}
@@ -79,11 +79,11 @@ const Login = () => {
           />
           <label htmlFor="password">Password:</label>
           <input
-            type="password"
             className="form__input"
+            type="password"
             id="password"
-            value={password}
             onChange={handlePwdInput}
+            value={password}
             required
           />
           <button className="form__submit-button">Sign In</button>

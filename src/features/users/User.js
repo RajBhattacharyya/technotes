@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectUserById } from "./UserApiSlice";
+import { selectUserById } from "./usersApiSlice";
 
 const User = ({ userId }) => {
   const user = useSelector((state) => selectUserById(state, userId));
@@ -27,9 +27,3 @@ const User = ({ userId }) => {
   } else return null;
 };
 export default User;
-
-// DLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' 
-// option is deprecated. Please use the 'setupMiddlewares' option.
-// (Use `node --trace-deprecation ...` to show where the 
-// warning was created)
-// (node:4640) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
