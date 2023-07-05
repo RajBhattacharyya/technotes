@@ -4,6 +4,7 @@ import { useRefreshMutation } from "./authApiSlice";
 import usePersist from "../../hooks/usePersist";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const PersistLogin = () => {
   const [persist] = usePersist();
@@ -17,6 +18,7 @@ const PersistLogin = () => {
 
   useEffect(() => {
     if (effectRan.current === true || process.env.NODE_ENV !== "development") {
+      // React 18 Strict Mode
       const verifyRefreshToken = async () => {
         console.log("Verifying refresh token");
         try {
@@ -40,13 +42,13 @@ const PersistLogin = () => {
     content = <Outlet />;
   } else if (isLoading) {
     console.log("loading");
-    content = <p>Loading...</p>;
+    content = <PulseLoader color={"#FFF"} />;
   } else if (isError) {
     console.log("error");
     content = (
       <p className="errmsg">
         {`${error?.data?.message} - `}
-        <Link to="/login">Please Login again</Link>.
+        <Link to="/login">Please login again</Link>.
       </p>
     );
   } else if (isSuccess && trueSuccess) {
